@@ -1,11 +1,58 @@
 import React from "react";
-import { Box, Stack, TextField, Autocomplete, Typography } from "@mui/material";
+import {
+  Box,
+  Stack,
+  TextField,
+  Autocomplete,
+  Typography,
+  Button,
+} from "@mui/material";
 import airplaneIcon from "../../assets/pngIcons/airplaneIcon.png";
 import locationIcon from "../../assets/pngIcons/locationIcon.png";
 
-interface Props {}
+interface Props {
+  setDirectionChange:any
+}
 
-const SearchPanel: React.FC<Props> = ({}) => {
+const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
+  const [minDistance, setMinDistance] = React.useState<any>(0);
+
+  const handleGetDistance = () => {
+    var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+    var origin2 = "Greenwich, England";
+    var destinationA = "Stockholm, Sweden";
+    var destinationB = new google.maps.LatLng(50.087692, 14.42115);
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [origin1, origin2],
+        destinations: [destinationA, destinationB],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: true,
+        avoidTolls: true,
+      },
+      (response, status) => {
+        if (status !== "OK") {
+          console.log("Error");
+        } else {
+          let origins: any = response?.originAddresses;
+          let element: any, distance: any, results: any;
+          for (let i = 0; i < origins.length; i++) {
+            results = response?.rows[i].elements;
+            for (let j = 0; j < results.length; j++) {
+              element = results[j];
+              distance = element.distance.value;
+            }
+          }
+          setMinDistance(distance);
+        }
+      }
+    );
+    setDirectionChange(true);
+  };
+
+
   return (
     <Box sx={{ width: "100%" }}>
       <Stack>
@@ -27,11 +74,15 @@ const SearchPanel: React.FC<Props> = ({}) => {
           spacing={3}
           justifyContent="center"
           alignItems="center"
-          sx={{ height: 200 }}
+          sx={{ height: '100%' ,marginTop:8}}
         >
-          <Stack direction="row"  justifyContent="center"
-          alignItems="center" spacing={2} >
-            <img src={locationIcon} alt="source" height="36"/>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
+            <img src={locationIcon} alt="source" height="36" />
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -43,9 +94,13 @@ const SearchPanel: React.FC<Props> = ({}) => {
             />
           </Stack>
 
-          <Stack direction="row"  justifyContent="center"
-          alignItems="center" spacing={2} >
-            <img src={locationIcon} alt="destination" height="36"/>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
+            <img src={locationIcon} alt="destination" height="36" />
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -56,8 +111,17 @@ const SearchPanel: React.FC<Props> = ({}) => {
               )}
             />
           </Stack>
+          <Button variant="contained" onClick={handleGetDistance}>
+            Get Distance
+          </Button>
+
+          <Typography style={{ fontSize: "22px", fontWeight: "bold",marginTop:60 }}>
+            Minimum Distance :{" "}
+            <span style={{ fontSize: "22px", color: "#FF0101" }}>
+              {(Number(minDistance) / 1.852).toFixed(2).toLocaleString()} NM
+            </span>
+          </Typography>
         </Stack>
-        <div></div>
       </Stack>
     </Box>
   );
