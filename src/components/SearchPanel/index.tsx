@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Stack,
@@ -10,19 +10,16 @@ import {
 import airplaneIcon from "../../assets/pngIcons/airplaneIcon.png";
 import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import axios from "axios";
-import {AirportContext} from "src/context/AirportContextProvider";
+import { AirportContext } from "src/context/AirportContextProvider";
 
 interface Props {
   minDistance?: any;
   handleGetDistance?: any;
 }
 
-const SearchPanel: React.FC<Props> = ({
-  minDistance,
-  handleGetDistance,
-}) => {
-
-  const {setSource,setDestination} = useContext(AirportContext)
+const SearchPanel: React.FC<Props> = ({ minDistance, handleGetDistance }) => {
+  const { setSource, setDestination, setPlotRoute } =
+    useContext(AirportContext);
   const [airports, setAirports] = React.useState<any>([]);
   const getAllAirports = () => {
     const config = {
@@ -110,7 +107,13 @@ const SearchPanel: React.FC<Props> = ({
               )}
             />
           </Stack>
-          <Button variant="contained" onClick={() => handleGetDistance()}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleGetDistance();
+           
+            }}
+          >
             Get Distance
           </Button>
 

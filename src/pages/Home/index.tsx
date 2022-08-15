@@ -13,6 +13,7 @@ const Home: React.FC<Props> = () => {
 
   const handleGetDistance = () => {
     const service = new google.maps.DistanceMatrixService();
+    setPlotRoute(true)
     service.getDistanceMatrix(
       {
         origins: [new google.maps.LatLng(source.lat, source.lng), source.name],
@@ -42,7 +43,7 @@ const Home: React.FC<Props> = () => {
         }
       }
     );
-    setPlotRoute(true);
+   
   };
 
   return (

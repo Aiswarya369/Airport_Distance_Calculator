@@ -10,7 +10,7 @@ const Map: React.FC<MapProps> = ({ style, zoom, center }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
-  const { source, destination, plotRoute } = useContext(AirportContext);
+  const { source, destination, plotRoute ,setPlotRoute} = useContext(AirportContext);
 
   function calculateAndDisplayRoute() {
     const request: any = {
@@ -21,22 +21,24 @@ const Map: React.FC<MapProps> = ({ style, zoom, center }) => {
     directionsService.route(request, function (result, status) {
       if (status == "OK") {
         directionsRenderer.setDirections(result);
+        setPlotRoute(false)
       }
     });
   }
 
   React.useEffect(() => {
+    console.log("Rerendering",plotRoute)
     if (ref.current) {
       directionsRenderer.setMap(
         new window.google.maps.Map(ref.current, {
           zoom,
           center,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
         })
       );
-
-      calculateAndDisplayRoute();
     }
-  }, [ref]);
+    calculateAndDisplayRoute();
+  }, [plotRoute]);
 
   return (
     <>
