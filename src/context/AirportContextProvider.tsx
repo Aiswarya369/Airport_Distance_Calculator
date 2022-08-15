@@ -1,24 +1,29 @@
 import React from "react";
 import { createContext, useState, FC } from "react";
 
-interface Props{
-    children:any
+interface Props {
+  children: any;
 }
 
 export type AirportContextType = {
   source?: any;
-  setSource?:any;
+  setSource?: any;
   destination?: any;
-  setDestination?:any;
+  setDestination?: any;
   plotRoute?: any;
-  setPlotRoute?:any;
+  setPlotRoute?: any;
+  // airports?: any;
+  // setAirports?: any;
+  distance?: any;
+  setDistance?: any;
 };
-
 
 const AirportContextDefaultValues: AirportContextType = {
   source: {},
   destination: {},
   plotRoute: false,
+  // airports: [],
+  distance: 0,
 };
 
 export const AirportContext = createContext<AirportContextType>(
@@ -33,6 +38,12 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
   const [plotRoute, setPlotRoute] = useState<any>(
     AirportContextDefaultValues.plotRoute
   );
+  // const [airports, setAirports] = useState<any>(
+  //   AirportContextDefaultValues.airports
+  // );
+  const [distance, setDistance] = useState<any>(
+    AirportContextDefaultValues.distance
+  );
 
   return (
     <AirportContext.Provider
@@ -42,7 +53,11 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
         destination,
         setDestination,
         plotRoute,
-        setPlotRoute
+        setPlotRoute,
+        // airports,
+        // setAirports,
+        distance,
+        setDistance,
       }}
     >
       {children}

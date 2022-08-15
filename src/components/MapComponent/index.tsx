@@ -2,38 +2,40 @@ import React, { useContext } from "react";
 import { AirportContext } from "src/context/AirportContextProvider";
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
-  zoom?: any;
-  center?: any;
 }
 
-const Map: React.FC<MapProps> = ({ style, zoom, center }) => {
+const Map: React.FC<MapProps> = ({ style }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
-  const { source, destination, plotRoute ,setPlotRoute} = useContext(AirportContext);
+  const { source, destination, plotRoute, setPlotRoute } =
+    useContext(AirportContext);
 
   function calculateAndDisplayRoute() {
     const request: any = {
-      origin: source,
-      destination: destination,
+      origin: source.name,
+      destination: destination.name,
       travelMode: "DRIVING",
     };
     directionsService.route(request, function (result, status) {
       if (status == "OK") {
         directionsRenderer.setDirections(result);
-        setPlotRoute(false)
+        setPlotRoute(false);
       }
     });
   }
 
   React.useEffect(() => {
-    console.log("Rerendering",plotRoute)
     if (ref.current) {
       directionsRenderer.setMap(
         new window.google.maps.Map(ref.current, {
-          zoom,
-          center,
+          zoom: 5,
+          center: {
+            lat: 39.023326727962036,
+            lng: -101.56867938341637,
+          },
           mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false,
         })
       );
     }
