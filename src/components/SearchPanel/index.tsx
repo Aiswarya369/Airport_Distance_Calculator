@@ -3,19 +3,27 @@ import {
   Box,
   Stack,
   TextField,
-  Autocomplete,
   Typography,
   Button,
+  Autocomplete,
 } from "@mui/material";
 import airplaneIcon from "../../assets/pngIcons/airplaneIcon.png";
 import locationIcon from "../../assets/pngIcons/locationIcon.png";
+import axios from "axios";
 
-interface Props {
-  setDirectionChange:any
-}
-
-const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
+const SearchPanel: React.FC = () => {
   const [minDistance, setMinDistance] = React.useState<any>(0);
+  const [data, setData] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    axios
+      .get(
+        `https://airlabs.co/api/v9/airports?country_code=US&api_key=0cb5f83d-1d96-4195-9f21-5dabbeb4a51e&_fields=name,iata_code,lat,lng`
+      )
+      .then((response) => {
+        setData(response?.data.response);
+      });
+  }, []);
 
   const handleGetDistance = () => {
     var origin1 = new google.maps.LatLng(55.930385, -3.118425);
@@ -49,9 +57,7 @@ const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
         }
       }
     );
-    setDirectionChange(true);
   };
-
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -74,7 +80,7 @@ const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
           spacing={3}
           justifyContent="center"
           alignItems="center"
-          sx={{ height: '100%' ,marginTop:8}}
+          sx={{ height: "100%", marginTop: 8 }}
         >
           <Stack
             direction="row"
@@ -86,7 +92,12 @@ const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={[]}
+              options={data}
+              autoHighlight
+              getOptionLabel={(option: any) =>
+                option.iata_code + "-" + option.name
+              }
+              selectOnFocus
               sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label="Source Airport" />
@@ -115,8 +126,10 @@ const SearchPanel: React.FC<Props> = ({setDirectionChange}) => {
             Get Distance
           </Button>
 
-          <Typography style={{ fontSize: "22px", fontWeight: "bold",marginTop:60 }}>
-            Minimum Distance :{" "}
+          <Typography
+            style={{ fontSize: "22px", fontWeight: "bold", marginTop: 60 }}
+          >
+            Distance :{" "}
             <span style={{ fontSize: "22px", color: "#FF0101" }}>
               {(Number(minDistance) / 1.852).toFixed(2).toLocaleString()} NM
             </span>

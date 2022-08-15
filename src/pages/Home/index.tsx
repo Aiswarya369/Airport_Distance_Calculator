@@ -3,18 +3,21 @@ import { Grid, Box } from "@mui/material";
 import MapView from "../../components/MapView";
 import SearchPanel from "../../components/SearchPanel";
 
+
 interface Props {}
 
 const Home: React.FC<Props> = () => {
   const [directionChange,setDirectionChange] = React.useState<boolean>(false)
+
+
   return (
     <Box>
       <Grid container>
         <Grid item xs={5}>
-          <SearchPanel setDirectionChange={setDirectionChange}/>
+          <SearchPanel />
         </Grid>
         <Grid item xs={7} sx={{height:'100vh'}}>
-          <MapView directionChange={directionChange}/>
+          <MapView />
         </Grid>
       </Grid>
     </Box>
