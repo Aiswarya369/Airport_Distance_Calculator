@@ -87,7 +87,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                   setSource(newValue);
                 }}
                 selectOnFocus
-                sx={{ width: 500 }}
+                sx={{ width: 400 }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Source Airport" />
                 )}
@@ -123,7 +123,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                   </Box>
                 )}
                 selectOnFocus
-                sx={{ width: 500 }}
+                sx={{ width: 400 }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Destination Airport" />
                 )}

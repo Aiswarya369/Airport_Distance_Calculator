@@ -19,10 +19,10 @@ const Home: React.FC<Props> = () => {
   //   return axios(config);
   // };
 
-  React.useEffect(() => {
-    setDistance(0);
-    // getAllAirports().then((res: any) => setAirports(res?.data.response));
-  }, []);
+  // React.useEffect(() => {
+  //   setDistance(0);
+  // getAllAirports().then((res: any) => setAirports(res?.data.response));
+  // }, []);
 
   const handleGetDistance = () => {
     const service = new google.maps.DistanceMatrixService();
