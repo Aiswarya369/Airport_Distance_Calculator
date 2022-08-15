@@ -3,26 +3,12 @@ import { Grid, Box } from "@mui/material";
 import MapView from "../../components/MapView";
 import SearchPanel from "../../components/SearchPanel";
 import { AirportContext } from "src/context/AirportContextProvider";
-// import axios from "axios";
 
 interface Props {}
 
 const Home: React.FC<Props> = () => {
   const { source, destination, setPlotRoute, setDistance } =
     useContext(AirportContext);
-
-  // const getAllAirports = () => {
-  //   const config = {
-  //     url: `https://airlabs.co/api/v9/airports?country_code=US&api_key=0cb5f83d-1d96-4195-9f21-5dabbeb4a51e&_fields=name,iata_code,lat,lng`,
-  //     method: "GET",
-  //   };
-  //   return axios(config);
-  // };
-
-  // React.useEffect(() => {
-  //   setDistance(0);
-  // getAllAirports().then((res: any) => setAirports(res?.data.response));
-  // }, []);
 
   const handleGetDistance = () => {
     const service = new google.maps.DistanceMatrixService();
