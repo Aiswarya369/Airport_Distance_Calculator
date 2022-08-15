@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import {
   Box,
   Stack,
@@ -10,59 +10,36 @@ import {
 import airplaneIcon from "../../assets/pngIcons/airplaneIcon.png";
 import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import axios from "axios";
+import {AirportContext} from "src/context/AirportContextProvider";
 
-const SearchPanel: React.FC = () => {
-  const [minDistance, setMinDistance] = React.useState<any>(0);
-  const [data, setData] = React.useState<any>([]);
+interface Props {
+  minDistance?: any;
+  handleGetDistance?: any;
+}
+
+const SearchPanel: React.FC<Props> = ({
+  minDistance,
+  handleGetDistance,
+}) => {
+
+  const {setSource,setDestination} = useContext(AirportContext)
+  const [airports, setAirports] = React.useState<any>([]);
+  const getAllAirports = () => {
+    const config = {
+      url: `https://airlabs.co/api/v9/airports?country_code=US&api_key=0cb5f83d-1d96-4195-9f21-5dabbeb4a51e&_fields=name,iata_code,lat,lng`,
+      method: "GET",
+    };
+    return axios(config);
+  };
 
   React.useEffect(() => {
-    axios
-      .get(
-        `https://airlabs.co/api/v9/airports?country_code=US&api_key=0cb5f83d-1d96-4195-9f21-5dabbeb4a51e&_fields=name,iata_code,lat,lng`
-      )
-      .then((response) => {
-        setData(response?.data.response);
-      });
+    getAllAirports().then((res: any) => setAirports(res?.data.response));
   }, []);
-
-  const handleGetDistance = () => {
-    var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-    var origin2 = "Greenwich, England";
-    var destinationA = "Stockholm, Sweden";
-    var destinationB = new google.maps.LatLng(50.087692, 14.42115);
-    var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [origin1, origin2],
-        destinations: [destinationA, destinationB],
-        travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.METRIC,
-        avoidHighways: true,
-        avoidTolls: true,
-      },
-      (response, status) => {
-        if (status !== "OK") {
-          console.log("Error");
-        } else {
-          let origins: any = response?.originAddresses;
-          let element: any, distance: any, results: any;
-          for (let i = 0; i < origins.length; i++) {
-            results = response?.rows[i].elements;
-            for (let j = 0; j < results.length; j++) {
-              element = results[j];
-              distance = element.distance.value;
-            }
-          }
-          setMinDistance(distance);
-        }
-      }
-    );
-  };
 
   return (
     <Box sx={{ width: "100%" }}>
       <Stack>
-        <Box style={{ height: 200, backgroundColor: "#1A73E8" }}>
+        <Box style={{ backgroundColor: "#1A73E8" }}>
           <Stack
             direction="row"
             justifyContent="center"
@@ -92,11 +69,14 @@ const SearchPanel: React.FC = () => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={data}
+              options={airports}
               autoHighlight
               getOptionLabel={(option: any) =>
                 option.iata_code + "-" + option.name
               }
+              onChange={(event, newValue) => {
+                setSource(newValue);
+              }}
               selectOnFocus
               sx={{ width: 300 }}
               renderInput={(params) => (
@@ -115,23 +95,31 @@ const SearchPanel: React.FC = () => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={[]}
+              options={airports}
+              autoHighlight
+              getOptionLabel={(option: any) =>
+                option.iata_code + "-" + option.name
+              }
+              onChange={(event, newValue) => {
+                setDestination(newValue);
+              }}
+              selectOnFocus
               sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label="Destination Airport" />
               )}
             />
           </Stack>
-          <Button variant="contained" onClick={handleGetDistance}>
+          <Button variant="contained" onClick={() => handleGetDistance()}>
             Get Distance
           </Button>
 
           <Typography
             style={{ fontSize: "22px", fontWeight: "bold", marginTop: 60 }}
           >
-            Distance :{" "}
+            Driving Distance :{" "}
             <span style={{ fontSize: "22px", color: "#FF0101" }}>
-              {(Number(minDistance) / 1.852).toFixed(2).toLocaleString()} NM
+              {(Number(minDistance) * 0.00054).toFixed(2).toLocaleString()} NM
             </span>
           </Typography>
         </Stack>

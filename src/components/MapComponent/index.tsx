@@ -1,22 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AirportContext } from "src/context/AirportContextProvider";
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
-  directionChange?: any;
   zoom?: any;
   center?: any;
 }
 
-const Map: React.FC<MapProps> = ({ style, directionChange, zoom, center }) => {
+const Map: React.FC<MapProps> = ({ style, zoom, center }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
+  const { source, destination, plotRoute } = useContext(AirportContext);
 
   function calculateAndDisplayRoute() {
-    var start = "chicago, il";
-    var end = "barstow, ca";
-    var request: any = {
-      origin: start,
-      destination: end,
+    const request: any = {
+      origin: source,
+      destination: destination,
       travelMode: "DRIVING",
     };
     directionsService.route(request, function (result, status) {
@@ -34,6 +33,8 @@ const Map: React.FC<MapProps> = ({ style, directionChange, zoom, center }) => {
           center,
         })
       );
+
+      calculateAndDisplayRoute();
     }
   }, [ref]);
 
