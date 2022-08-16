@@ -13,12 +13,12 @@ interface Props {
 const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
   const { setSource, setDestination, distance, setDistance } =
     useContext(AirportContext);
-
-  const _filterOptions = createFilterOptions();
+  const conversionUnit = 0.00054; //to convert miles to nauticalMiles
+  const filterOptionMethod = createFilterOptions();
   const filterOptions = (options: any, state: any) => {
-    const result = _filterOptions(options, state);
+    const result = filterOptionMethod(options, state);
     if (result.length === 0) {
-      return _filterOptions(options, {
+      return filterOptionMethod(options, {
         ...state,
         getOptionLabel: (o: any) => o.name.toString() || o.iata_code.toString(),
       });
@@ -138,7 +138,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                     fontWeight: 600,
                   }}
                 >
-                  {(Number(distance.distance) * 0.00054)
+                  {(Number(distance.distance) * conversionUnit)
                     .toFixed(2)
                     .toLocaleString()}{" "}
                   NM

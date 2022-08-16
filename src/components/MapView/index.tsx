@@ -1,3 +1,4 @@
+ /* eslint-disable */
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import React, { useContext } from "react";
 import { CircularProgress, Stack } from "@mui/material";
@@ -22,6 +23,11 @@ const Map: React.FC<MapProps> = ({ style }) => {
   const { source, destination, plotRoute, setPlotRoute } =
     useContext(AirportContext);
 
+  const defaultCordinates = {
+    lat: 39.023326727962036,
+    lng: -101.56867938341637,
+  }; //approx United States Cordinates
+
   function calculateAndDisplayRoute() {
     const request: any = {
       origin: source?.name,
@@ -40,10 +46,7 @@ const Map: React.FC<MapProps> = ({ style }) => {
       directionsRenderer.setMap(
         new window.google.maps.Map(ref.current, {
           zoom: 5,
-          center: {
-            lat: 39.023326727962036,
-            lng: -101.56867938341637,
-          },
+          center: defaultCordinates,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           mapTypeControl: false,
         })
