@@ -1,6 +1,6 @@
 # Airport Distance Calculator
 
-This react project calculates the distance between two US airports in nautical miles, using auto-complete for the airport fields. Airports are be searchable by name or 3 digit code and route is plotted on Google Maps.
+This react project calculates the distance between two US airports in nautical miles, using auto-complete for the airport fields. Airports are searchable by name or 3 digit code and route is plotted on Google Maps.
 
 ## Setup
 
@@ -15,5 +15,5 @@ npm start
 ## Technical Details
 
 - Typescript is the language used in this project.
-- Material UI is used ad the CSS library for the React components
-- @googlemaps/react-wrapper library is used to integrate Map 
+- Material UI is used as the CSS library for the React components
+- @googlemaps/react-wrapper library is used to integrate the Google Map. 
