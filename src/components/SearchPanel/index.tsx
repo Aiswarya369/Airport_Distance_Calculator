@@ -130,7 +130,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
 
             {distance.distance !== 0 && distance.distance && (
               <Typography sx={{ fontSize: "22px", fontWeight: 400 }}>
-                Driving Distance :{" "}
+                Distance :{" "}
                 <span
                   style={{
                     fontSize: "22px",
@@ -149,7 +149,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
               <Typography
                 sx={{ fontSize: "22px", fontWeight: 500, color: "#FF0101" }}
               >
-                No Driving Distance
+                No Driving Route between the airports!
               </Typography>
             )}
           </Stack>
