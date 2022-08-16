@@ -17,7 +17,7 @@ const Home: React.FC<Props> = () => {
   } = useContext(AirportContext);
 
   useEffect(() => {
-    setDistance(0);
+    setDistance({ distance: 0, error: "" });
     setSource({});
     setPlotRoute(false);
     setDestination({});
@@ -48,10 +48,14 @@ const Home: React.FC<Props> = () => {
             results = response?.rows[i].elements;
             for (let j = 0; j < results.length; j++) {
               element = results[j];
-              distance = element.distance.value;
+              distance = element.distance?.value;
             }
           }
-          setDistance(distance);
+          if (distance) {
+            setDistance({ distance: distance, error: "" });
+          } else {
+            setDistance({ distance: 0, error: "No driving distance" });
+          }
         }
       }
     );

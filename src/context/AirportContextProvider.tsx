@@ -19,7 +19,7 @@ const AirportContextDefaultValues: AirportContextType = {
   source: {},
   destination: {},
   plotRoute: false,
-  distance: 0,
+  distance: {},
 };
 
 export const AirportContext = createContext<AirportContextType>(

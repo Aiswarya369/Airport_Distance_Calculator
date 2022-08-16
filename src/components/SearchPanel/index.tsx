@@ -11,7 +11,8 @@ interface Props {
 }
 
 const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
-  const { setSource, setDestination, distance ,setDistance } = useContext(AirportContext);
+  const { setSource, setDestination, distance, setDistance } =
+    useContext(AirportContext);
 
   const _filterOptions = createFilterOptions();
   const filterOptions = (options: any, state: any) => {
@@ -57,7 +58,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setDistance(0)
+            setDistance(0);
             handleGetDistance();
           }}
         >
@@ -84,7 +85,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                   option.iata_code + "-" + option.name
                 }
                 renderOption={renderOption}
-                onChange={(event, newValue) => {
+                onChange={(_event, newValue) => {
                   setSource(newValue);
                 }}
                 selectOnFocus
@@ -126,14 +127,30 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
               Get Distance
             </Button>
 
-            <Typography sx={{ fontSize: "22px", fontWeight: 400 }}>
-              Driving Distance :{" "}
-              <span
-                style={{ fontSize: "22px", color: "#FF0101", fontWeight: 600 }}
+            {distance.distance !== 0 && distance.distance && (
+              <Typography sx={{ fontSize: "22px", fontWeight: 400 }}>
+                Driving Distance :{" "}
+                <span
+                  style={{
+                    fontSize: "22px",
+                    color: "#FF0101",
+                    fontWeight: 600,
+                  }}
+                >
+                  {(Number(distance.distance) * 0.00054)
+                    .toFixed(2)
+                    .toLocaleString()}{" "}
+                  NM
+                </span>
+              </Typography>
+            )}
+            {distance.error && (
+              <Typography
+                sx={{ fontSize: "22px", fontWeight: 400, color: "#FF0101" }}
               >
-                {(Number(distance) * 0.00054).toFixed(2).toLocaleString()} NM
-              </span>
-            </Typography>
+                No Driving Distance
+              </Typography>
+            )}
           </Stack>
         </form>
       </Stack>
