@@ -2,7 +2,7 @@
 
 This react project calculates the distance between two US airports in nautical miles, using auto-complete for the airport fields. Airports are be searchable by name or 3 digit code and route is plotted on Google Maps.
 
-##Setup
+## Setup
 
 To install and run the project follow the below steps
 ```
@@ -13,7 +13,7 @@ npm start
 
 ```
 
-##Technical Details
+## Technical Details
 
 - Typescript is the language used in this project.
 - Material UI is used ad the CSS library for the React components
