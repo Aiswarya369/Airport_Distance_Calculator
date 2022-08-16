@@ -123,6 +123,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                 )}
               />
             </Stack>
+
             <Button type="submit" variant="contained">
               Get Distance
             </Button>

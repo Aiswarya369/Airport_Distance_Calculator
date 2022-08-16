@@ -24,12 +24,12 @@ const Map: React.FC<MapProps> = ({ style }) => {
 
   function calculateAndDisplayRoute() {
     const request: any = {
-      origin: source.name,
-      destination: destination.name,
+      origin: source?.name,
+      destination: destination?.name,
       travelMode: "DRIVING",
     };
     directionsService.route(request, function (result, status) {
-      if (status == "OK") {
+      if (status === "OK") {
         directionsRenderer.setDirections(result);
       }
     });

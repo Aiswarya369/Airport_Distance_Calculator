@@ -28,9 +28,9 @@ const Home: React.FC<Props> = () => {
     setPlotRoute(true);
     service.getDistanceMatrix(
       {
-        origins: [new google.maps.LatLng(source.lat, source.lng), source.name],
+        origins: [new google.maps.LatLng(source?.lat, source?.lng), source?.name],
         destinations: [
-          new google.maps.LatLng(destination.lat, destination.lng),
+          new google.maps.LatLng(destination?.lat, destination?.lng),
           destination.name,
         ],
         travelMode: google.maps.TravelMode.DRIVING,
