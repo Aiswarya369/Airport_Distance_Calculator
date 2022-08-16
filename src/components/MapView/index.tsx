@@ -31,7 +31,6 @@ const Map: React.FC<MapProps> = ({ style }) => {
     directionsService.route(request, function (result, status) {
       if (status == "OK") {
         directionsRenderer.setDirections(result);
-       
       }
     });
   }
@@ -63,7 +62,7 @@ const Map: React.FC<MapProps> = ({ style }) => {
 
 const MapView: React.FC = () => {
   return (
-    <Wrapper apiKey="AIzaSyBixWJX0eS4dmyWYF-7v27gnUJU1724ntw" render={render}>
+    <Wrapper apiKey={process.env.REACT_APP_API_KEY!} render={render}>
       <Map style={{ flexGrow: "1", height: "100%" }}></Map>
     </Wrapper>
   );
