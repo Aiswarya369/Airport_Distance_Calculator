@@ -112,7 +112,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                 getOptionLabel={(option: any) =>
                   option.iata_code + "-" + option.name
                 }
-                onChange={(event, newValue) => {
+                onChange={(_event, newValue) => {
                   setDestination(newValue);
                 }}
                 renderOption={renderOption}
@@ -146,7 +146,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
             )}
             {distance.error && (
               <Typography
-                sx={{ fontSize: "22px", fontWeight: 400, color: "#FF0101" }}
+                sx={{ fontSize: "22px", fontWeight: 500, color: "#FF0101" }}
               >
                 No Driving Distance
               </Typography>
