@@ -10,7 +10,6 @@ git clone https://github.com/Aiswarya369/Airport_Distance_Calculator.git
 cd Airport_Distance_Calculator
 npm install
 npm start
-
 ```
 
 ## Technical Details
