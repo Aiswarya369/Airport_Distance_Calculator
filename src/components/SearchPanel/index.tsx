@@ -49,7 +49,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
           >
             <img src={airplaneIcon} alt="airplane" width="180" />
             <Typography
-              sx={{ color: "white", fontSize: "32px", fontWeight: 500 }}
+              sx={{ color: "white", fontSize: "30px", fontWeight: 500 }}
             >
               US AIRPORTS <br /> DISTANCE CALCULATOR
             </Typography>
