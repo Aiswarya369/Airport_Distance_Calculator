@@ -5,15 +5,18 @@ import airplaneIcon from "../../assets/pngIcons/airplaneIcon.png";
 import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
+import { calculateFlyingDistance } from "../../utils";
 
-interface Props {
-  handleGetDistance?: any;
-}
+const SearchPanel: React.FC = () => {
+  const {
+    setSource,
+    setDestination,
+    distance,
+    setDistance,
+    source,
+    destination,
+  } = useContext(AirportContext);
 
-const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
-  const { setSource, setDestination, distance, setDistance } =
-    useContext(AirportContext);
-  const conversionUnit = 0.00054; //to convert miles to nauticalMiles
   const filterOptionMethod = createFilterOptions();
   const filterOptions = (options: any, state: any) => {
     const result = filterOptionMethod(options, state);
@@ -59,7 +62,13 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
           onSubmit={(e) => {
             e.preventDefault();
             setDistance(0);
-            handleGetDistance();
+            const d: any = calculateFlyingDistance(
+              source.lat,
+              source.lng,
+              destination.lat,
+              destination.lng
+            );
+            setDistance(d);
           }}
         >
           <Stack
@@ -127,8 +136,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
             <Button type="submit" variant="contained">
               Get Distance
             </Button>
-
-            {distance.distance !== 0 && distance.distance && (
+            {distance !== 0 && source && destination && (
               <Typography sx={{ fontSize: "22px", fontWeight: 400 }}>
                 Distance :{" "}
                 <span
@@ -138,18 +146,8 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                     fontWeight: 600,
                   }}
                 >
-                  {(Number(distance.distance) * conversionUnit)
-                    .toFixed(2)
-                    .toLocaleString()}{" "}
-                  NM
+                  {distance} NM
                 </span>
-              </Typography>
-            )}
-            {distance.error && (
-              <Typography
-                sx={{ fontSize: "22px", fontWeight: 500, color: "#FF0101" }}
-              >
-                No Driving Route between the airports!
               </Typography>
             )}
           </Stack>
