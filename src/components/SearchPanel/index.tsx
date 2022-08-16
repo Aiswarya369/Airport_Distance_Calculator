@@ -47,7 +47,6 @@ const SearchPanel: React.FC = () => {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            spacing={2}
             sx={{ height: "100%" }}
           >
             <img src={airplaneIcon} alt="airplane" width="180" />
@@ -104,7 +103,6 @@ const SearchPanel: React.FC = () => {
                 )}
               />
             </Stack>
-
             <Stack
               direction="row"
               justifyContent="center"
@@ -132,7 +130,6 @@ const SearchPanel: React.FC = () => {
                 )}
               />
             </Stack>
-
             <Button type="submit" variant="contained">
               Get Distance
             </Button>
@@ -146,7 +143,7 @@ const SearchPanel: React.FC = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {distance} NM
+                  {distance} Nautical miles
                 </span>
               </Typography>
             )}

@@ -9,8 +9,6 @@ export type AirportContextType = {
   setSource?: any;
   destination?: any;
   setDestination?: any;
-  plotRoute?: any;
-  setPlotRoute?: any;
   distance?: any;
   setDistance?: any;
 };
@@ -18,7 +16,6 @@ export type AirportContextType = {
 const AirportContextDefaultValues: AirportContextType = {
   source: {},
   destination: {},
-  plotRoute: false,
   distance: 0,
 };
 
@@ -31,10 +28,6 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
   const [destination, setDestination] = useState<any>(
     AirportContextDefaultValues.destination
   );
-  const [plotRoute, setPlotRoute] = useState<any>(
-    AirportContextDefaultValues.plotRoute
-  );
-
   const [distance, setDistance] = useState<any>(
     AirportContextDefaultValues.distance
   );
@@ -46,8 +39,6 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
         setSource,
         destination,
         setDestination,
-        plotRoute,
-        setPlotRoute,
         distance,
         setDistance,
       }}

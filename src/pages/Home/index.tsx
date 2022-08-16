@@ -8,9 +8,6 @@ interface Props {}
 
 const Home: React.FC<Props> = () => {
   const {
-    source,
-    destination,
-    setPlotRoute,
     setDistance,
     setSource,
     setDestination,
@@ -19,7 +16,6 @@ const Home: React.FC<Props> = () => {
   useEffect(() => {
     setDistance(0);
     setSource({});
-    setPlotRoute(false);
     setDestination({});
   }, []);
 

@@ -4,7 +4,7 @@ This react project calculates the distance between two US airports in nautical m
 
 ## Setup
 
-To install and run the project follow the below steps
+To install and run the project follow the below steps.
 ```
 git clone https://github.com/Aiswarya369/Airport_Distance_Calculator.git
 cd Airport_Distance_Calculator
@@ -15,5 +15,5 @@ npm start
 ## Technical Details
 
 - Typescript is the language used in this project.
-- Material UI is used as the CSS library for the React components
+- Material UI is used as the CSS library for the React components.
 - @googlemaps/react-wrapper library is used to integrate the Google Map. 

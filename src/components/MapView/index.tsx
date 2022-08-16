@@ -2,23 +2,31 @@
 import { Wrapper } from "@googlemaps/react-wrapper";
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { AirportContext } from "src/context/AirportContextProvider";
-import { clearRoutesMarkers } from "../../utils";
+import { clearRoutesMarkers, getBounds, plotRoute } from "../../utils";
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type GoogleMarker = google.maps.Marker;
 
 const Map: React.FC = () => {
+
+  //approx United States Cordinates
   const defaultCordinates = {
     lat: 39.023326727962036,
     lng: -101.56867938341637,
-  }; //approx United States Cordinates
-  const { source, destination } = useContext(AirportContext);
+  }; 
+
+  const { source, destination, setDistance } = useContext(AirportContext);
+
   const ref = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<GoogleMap>();
-  const routes = useRef<any>([]);
   const sourceMarkers = useRef<any>([]);
   const destinationMarkers = useRef<any>([]);
+
+  const [map, setMap] = useState<GoogleMap>();
+  const routes = useRef<any>([]);
+
+  const isSourceValid = source && source.lat && source.lng;
+  const isDestinationValid = destination && destination.lat && destination.lng;
 
   useEffect(() => {
     if (!map) {
@@ -37,14 +45,14 @@ const Map: React.FC = () => {
   }, [map]);
 
   useEffect(() => {
-    if (source && source.lat && source.lng) {
-      addMarker(
+    if (isSourceValid) {
+      addMarkerRoute(
         new google.maps.LatLng(Number(source.lat), Number(source.lng)),
         true
       );
     }
-    if (destination && destination.lat && destination.lng) {
-      addMarker(
+    if (isDestinationValid) {
+      addMarkerRoute(
         new google.maps.LatLng(
           Number(destination.lat),
           Number(destination.lng)
@@ -53,13 +61,14 @@ const Map: React.FC = () => {
       );
     }
     if (!source || !destination) {
+      setDistance(0);
       clearRoutesMarkers(routes.current);
       clearRoutesMarkers(destinationMarkers.current);
       clearRoutesMarkers(sourceMarkers.current);
     }
   }, [source, destination]);
 
-  const addMarker = (location: GoogleLatLng, isSource: boolean): void => {
+  const addMarkerRoute = (location: GoogleLatLng, isSource: boolean): void => {
     if (isSource && source) {
       clearRoutesMarkers(sourceMarkers.current);
       const sMarker: GoogleMarker = new google.maps.Marker({
@@ -71,7 +80,6 @@ const Map: React.FC = () => {
         title: source.name,
         map: map,
       });
-      clearRoutesMarkers(sourceMarkers.current);
       sourceMarkers.current.push(sMarker);
     }
 
@@ -86,41 +94,16 @@ const Map: React.FC = () => {
         title: destination.name,
         map: map,
       });
-      clearRoutesMarkers(destinationMarkers.current);
       destinationMarkers.current.push(dMarker);
     }
 
     if (source && destination) {
       clearRoutesMarkers(routes.current);
-      const line = new google.maps.Polyline({
-        geodesic: true,
-        path: [
-          { lat: Number(source.lat), lng: Number(source.lng) },
-          { lat: Number(destination.lat), lng: Number(destination.lng) },
-        ],
-        map: map,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-      });
-      clearRoutesMarkers(routes.current);
+      const line = plotRoute(source, destination, map);
       routes.current.push(line);
     }
-    if (
-      source &&
-      source.lat &&
-      source.lng &&
-      destination &&
-      destination.lat &&
-      destination.lng
-    ) {
-      const bounds = new google.maps.LatLngBounds();
-      bounds.extend({ lat: Number(source.lat), lng: Number(source.lng) });
-      bounds.extend({
-        lat: Number(destination.lat),
-        lng: Number(destination.lng),
-      });
-      map?.fitBounds(bounds);
+    if (isSourceValid && isDestinationValid) {
+      map?.fitBounds(getBounds(source, destination));
     }
   };
 
