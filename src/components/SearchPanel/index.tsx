@@ -11,21 +11,29 @@ interface Props {
 }
 
 const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
-  const { setSource, setDestination, distance } = useContext(AirportContext);
+  const { setSource, setDestination, distance ,setDistance } = useContext(AirportContext);
 
   const _filterOptions = createFilterOptions();
   const filterOptions = (options: any, state: any) => {
     const result = _filterOptions(options, state);
-
     if (result.length === 0) {
       return _filterOptions(options, {
         ...state,
         getOptionLabel: (o: any) => o.name.toString() || o.iata_code.toString(),
       });
     }
-
     return result;
   };
+
+  const renderOption = (props: any, option: any) => (
+    <Box component="li" {...props}>
+      <span>
+        <b>{option.iata_code}</b>
+        {" - "}
+        {option.name}
+      </span>
+    </Box>
+  );
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -49,6 +57,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            setDistance(0)
             handleGetDistance();
           }}
         >
@@ -74,15 +83,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                 getOptionLabel={(option: any) =>
                   option.iata_code + "-" + option.name
                 }
-                renderOption={(props: any, option: any) => (
-                  <Box component="li" {...props}>
-                    <span>
-                      <b>{option.iata_code}</b>
-                      {" - "}
-                      {option.name}
-                    </span>
-                  </Box>
-                )}
+                renderOption={renderOption}
                 onChange={(event, newValue) => {
                   setSource(newValue);
                 }}
@@ -113,15 +114,7 @@ const SearchPanel: React.FC<Props> = ({ handleGetDistance }) => {
                 onChange={(event, newValue) => {
                   setDestination(newValue);
                 }}
-                renderOption={(props: any, option: any) => (
-                  <Box component="li" {...props}>
-                    <span>
-                      <b>{option.iata_code}</b>
-                      {" - "}
-                      {option.name}
-                    </span>
-                  </Box>
-                )}
+                renderOption={renderOption}
                 selectOnFocus
                 sx={{ width: 400 }}
                 renderInput={(params) => (

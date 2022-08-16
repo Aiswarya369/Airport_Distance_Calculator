@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Grid, Box } from "@mui/material";
 import MapView from "../../components/MapView";
 import SearchPanel from "../../components/SearchPanel";
@@ -7,8 +7,21 @@ import { AirportContext } from "src/context/AirportContextProvider";
 interface Props {}
 
 const Home: React.FC<Props> = () => {
-  const { source, destination, setPlotRoute, setDistance } =
-    useContext(AirportContext);
+  const {
+    source,
+    destination,
+    setPlotRoute,
+    setDistance,
+    setSource,
+    setDestination,
+  } = useContext(AirportContext);
+
+  useEffect(() => {
+    setDistance(0);
+    setSource({});
+    setPlotRoute(false);
+    setDestination({});
+  }, []);
 
   const handleGetDistance = () => {
     const service = new google.maps.DistanceMatrixService();
