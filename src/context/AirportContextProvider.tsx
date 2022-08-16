@@ -1,4 +1,3 @@
-import React from "react";
 import { createContext, useState, FC } from "react";
 
 interface Props {
@@ -12,8 +11,6 @@ export type AirportContextType = {
   setDestination?: any;
   plotRoute?: any;
   setPlotRoute?: any;
-  // airports?: any;
-  // setAirports?: any;
   distance?: any;
   setDistance?: any;
 };
@@ -22,7 +19,6 @@ const AirportContextDefaultValues: AirportContextType = {
   source: {},
   destination: {},
   plotRoute: false,
-  // airports: [],
   distance: 0,
 };
 
@@ -38,9 +34,7 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
   const [plotRoute, setPlotRoute] = useState<any>(
     AirportContextDefaultValues.plotRoute
   );
-  // const [airports, setAirports] = useState<any>(
-  //   AirportContextDefaultValues.airports
-  // );
+
   const [distance, setDistance] = useState<any>(
     AirportContextDefaultValues.distance
   );
@@ -54,8 +48,6 @@ const AirportContextProvider: FC<Props> = ({ children }) => {
         setDestination,
         plotRoute,
         setPlotRoute,
-        // airports,
-        // setAirports,
         distance,
         setDistance,
       }}

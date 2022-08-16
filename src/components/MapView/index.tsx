@@ -37,7 +37,6 @@ const Map: React.FC<MapProps> = ({ style }) => {
   }
 
   React.useEffect(() => {
-    console.log("Re-rendering");
     if (ref.current) {
       directionsRenderer.setMap(
         new window.google.maps.Map(ref.current, {
