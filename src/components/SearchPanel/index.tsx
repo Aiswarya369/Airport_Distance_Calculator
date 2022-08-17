@@ -7,7 +7,6 @@ import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
 import { calculateFlyingDistance } from "../../utils";
 
-
 const SearchPanel: React.FC = () => {
   const {
     setSource,
@@ -24,7 +23,7 @@ const SearchPanel: React.FC = () => {
     if (result.length === 0) {
       return filterOptionMethod(options, {
         ...state,
-        getOptionLabel: (o:any) => o.name.toString() || o.iata_code.toString(),
+        getOptionLabel: (o: any) => o.name.toString() || o.iata_code.toString(),
       });
     }
     return result;
@@ -58,6 +57,7 @@ const SearchPanel: React.FC = () => {
             </Typography>
           </Stack>
         </Box>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -82,6 +82,7 @@ const SearchPanel: React.FC = () => {
               justifyContent="center"
               alignItems="center"
               spacing={2}
+              sx={{ width: "100%" }}
             >
               <img src={locationIcon} alt="source" height="36" />
               <Autocomplete
@@ -98,7 +99,7 @@ const SearchPanel: React.FC = () => {
                   setSource(newValue);
                 }}
                 selectOnFocus
-                sx={{ width: 400 }}
+                sx={{ width: "90%" }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Source Airport" />
                 )}
@@ -109,6 +110,7 @@ const SearchPanel: React.FC = () => {
               justifyContent="center"
               alignItems="center"
               spacing={2}
+              sx={{ width: "100%" }}
             >
               <img src={locationIcon} alt="destination" height="36" />
               <Autocomplete
@@ -125,7 +127,7 @@ const SearchPanel: React.FC = () => {
                 }}
                 renderOption={renderOption}
                 selectOnFocus
-                sx={{ width: 400 }}
+                sx={{ width: "90%" }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Destination Airport" />
                 )}
