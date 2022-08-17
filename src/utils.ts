@@ -1,13 +1,13 @@
 /*global google*/
-
+import { GoogleMarker, GooglePolyLine ,ICordsData, GoogleMap} from "./types";
 // Function to calculate the distance in nautical miles
 export const calculateFlyingDistance = (
-  sourceLat: any,
-  sourceLng: any,
-  destinationLat: any,
-  destinationLng: any
+  sourceLat: number,
+  sourceLng: number,
+  destinationLat: number,
+  destinationLng: number
 ) => {
-  const R = 3440 ; //Earth mean radius in nautical miles
+  const R = 3440; //Earth mean radius in nautical miles
   //Distance between latitudes and longitudes
   const latDifference = (sourceLat - destinationLat) * (Math.PI / 180);
   const lngDifference = (sourceLng - destinationLng) * (Math.PI / 180);
@@ -28,14 +28,16 @@ export const calculateFlyingDistance = (
 };
 
 //To clear previous routes and markers
-export const clearRoutesMarkers = (array: any) => {
+export const clearRoutesMarkers = (
+  array: Array<GoogleMarker | GooglePolyLine>
+) => {
   for (let arr of array) {
     arr.setMap(null);
   }
 };
 
 //To set boundaries of map based on markers
-export const getBounds = (source: any, destination: any) => {
+export const getBounds = (source: ICordsData, destination: ICordsData) => {
   const bounds = new google.maps.LatLngBounds();
   bounds.extend({ lat: Number(source.lat), lng: Number(source.lng) });
   bounds.extend({
@@ -46,7 +48,7 @@ export const getBounds = (source: any, destination: any) => {
 };
 
 // To plot the route between points
-export const plotRoute = (source: any, destination: any, map: any) => {
+export const plotRoute = (source: ICordsData, destination: ICordsData, map: GoogleMap) => {
   return new google.maps.Polyline({
     geodesic: true,
     path: [

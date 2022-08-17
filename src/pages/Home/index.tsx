@@ -7,16 +7,12 @@ import { AirportContext } from "src/context/AirportContextProvider";
 interface Props {}
 
 const Home: React.FC<Props> = () => {
-  const {
-    setDistance,
-    setSource,
-    setDestination,
-  } = useContext(AirportContext);
+  const { setDistance, setSource, setDestination } = useContext(AirportContext);
 
   useEffect(() => {
     setDistance(0);
-    setSource({});
-    setDestination({});
+    setSource({ name: "", lat: "", lng: ""});
+    setDestination({ name: "", lat: "", lng: "" });
   }, []);
 
   return (

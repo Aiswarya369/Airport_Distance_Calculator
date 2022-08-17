@@ -3,27 +3,28 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { clearRoutesMarkers, getBounds, plotRoute } from "../../utils";
-
-type GoogleLatLng = google.maps.LatLng;
-type GoogleMap = google.maps.Map;
-type GoogleMarker = google.maps.Marker;
+import {
+  GoogleLatLng,
+  GoogleMap,
+  GoogleMarker,
+  GooglePolyLine,
+} from "../../types";
 
 const Map: React.FC = () => {
-
   //approx United States Cordinates
   const defaultCordinates = {
     lat: 39.023326727962036,
     lng: -101.56867938341637,
-  }; 
+  };
 
   const { source, destination, setDistance } = useContext(AirportContext);
 
   const ref = useRef<HTMLDivElement>(null);
-  const sourceMarkers = useRef<any>([]);
-  const destinationMarkers = useRef<any>([]);
+  const routes = useRef<GooglePolyLine[]>([]);
+  const sourceMarkers = useRef<GoogleMarker[]>([]);
+  const destinationMarkers = useRef<GoogleMarker[]>([]);
 
   const [map, setMap] = useState<GoogleMap>();
-  const routes = useRef<any>([]);
 
   const isSourceValid = source && source.lat && source.lng;
   const isDestinationValid = destination && destination.lat && destination.lng;
@@ -97,9 +98,9 @@ const Map: React.FC = () => {
       destinationMarkers.current.push(dMarker);
     }
 
-    if (source && destination) {
+    if (isSourceValid && isDestinationValid) {
       clearRoutesMarkers(routes.current);
-      const line = plotRoute(source, destination, map);
+      const line = plotRoute(source, destination, map!);
       routes.current.push(line);
     }
     if (isSourceValid && isDestinationValid) {

@@ -6,6 +6,7 @@ import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
 import { calculateFlyingDistance } from "../../utils";
+import {ICordsData} from "../../types"
 
 const SearchPanel: React.FC = () => {
   const {
@@ -61,13 +62,13 @@ const SearchPanel: React.FC = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setDistance(0);
-            const d: any = calculateFlyingDistance(
-              source.lat,
-              source.lng,
-              destination.lat,
-              destination.lng
+            const d: string = calculateFlyingDistance(
+              Number(source?.lat),
+              Number(source?.lng),
+              Number(destination?.lat),
+              Number(destination?.lng)
             );
-            setDistance(d);
+            setDistance(Number(d));
           }}
         >
           <Stack
@@ -120,7 +121,7 @@ const SearchPanel: React.FC = () => {
                   option.iata_code + "-" + option.name
                 }
                 onChange={(_event, newValue) => {
-                  setDestination(newValue);
+                  setDestination(newValue)
                 }}
                 renderOption={renderOption}
                 selectOnFocus

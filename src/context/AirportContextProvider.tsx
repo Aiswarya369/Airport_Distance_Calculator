@@ -1,22 +1,26 @@
 import { createContext, useState, FC } from "react";
+import { ICordsData } from "../types";
 
 interface Props {
-  children: any;
+  children: React.ReactNode;
 }
 
 export type AirportContextType = {
-  source?: any;
-  setSource?: any;
-  destination?: any;
-  setDestination?: any;
-  distance?: any;
-  setDistance?: any;
+  source: ICordsData;
+  setSource: (data) => void | undefined;
+  destination: ICordsData;
+  setDestination: (data) => void | undefined;
+  distance: number;
+  setDistance: (data: number) => void;
 };
 
 const AirportContextDefaultValues: AirportContextType = {
-  source: {},
-  destination: {},
+  source: { name: "", lat: "", lng: "" },
+  destination: { name: "", lat: "", lng: "" },
   distance: 0,
+  setSource: () => {},
+  setDestination: () => {},
+  setDistance: () => {},
 };
 
 export const AirportContext = createContext<AirportContextType>(
@@ -24,11 +28,11 @@ export const AirportContext = createContext<AirportContextType>(
 );
 
 const AirportContextProvider: FC<Props> = ({ children }) => {
-  const [source, setSource] = useState<any>(AirportContextDefaultValues.source);
-  const [destination, setDestination] = useState<any>(
+  const [source, setSource] = useState(AirportContextDefaultValues.source);
+  const [destination, setDestination] = useState(
     AirportContextDefaultValues.destination
   );
-  const [distance, setDistance] = useState<any>(
+  const [distance, setDistance] = useState(
     AirportContextDefaultValues.distance
   );
 
