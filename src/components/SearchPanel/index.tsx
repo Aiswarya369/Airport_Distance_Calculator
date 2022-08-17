@@ -6,7 +6,7 @@ import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
 import { calculateFlyingDistance } from "../../utils";
-import { ICordsData } from "../../types";
+
 
 const SearchPanel: React.FC = () => {
   const {
