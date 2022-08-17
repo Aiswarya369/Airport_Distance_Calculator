@@ -62,7 +62,7 @@ const Map: React.FC = () => {
       );
     }
     if (!source || !destination) {
-      setDistance(0);
+      setDistance({d:0,comment:""});
       clearRoutesMarkers(routes.current);
       clearRoutesMarkers(destinationMarkers.current);
       clearRoutesMarkers(sourceMarkers.current);

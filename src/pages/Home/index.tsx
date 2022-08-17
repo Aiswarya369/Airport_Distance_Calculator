@@ -10,8 +10,8 @@ const Home: React.FC<Props> = () => {
   const { setDistance, setSource, setDestination } = useContext(AirportContext);
 
   useEffect(() => {
-    setDistance(0);
-    setSource({ name: "", lat: "", lng: ""});
+    setDistance({ d: 0, comment: "" });
+    setSource({ name: "", lat: "", lng: "" });
     setDestination({ name: "", lat: "", lng: "" });
   }, []);
 

@@ -46,6 +46,24 @@ const SearchPanel: React.FC = () => {
     </Box>
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setDistance({ d: 0, comment: "" });
+    const d: string = calculateFlyingDistance(
+      Number(source?.lat),
+      Number(source?.lng),
+      Number(destination?.lat),
+      Number(destination?.lng)
+    );
+    setDistance({
+      d: Number(d),
+      comment:
+        source?.lat === destination?.lat && source?.lng === destination?.lng
+          ? "Source and Destination Airports are the same."
+          : "",
+    });
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Stack>
@@ -65,19 +83,7 @@ const SearchPanel: React.FC = () => {
           </Stack>
         </Box>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setDistance(0);
-            const d: string = calculateFlyingDistance(
-              Number(source?.lat),
-              Number(source?.lng),
-              Number(destination?.lat),
-              Number(destination?.lng)
-            );
-            setDistance(Number(d));
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <Stack
             spacing={3}
             justifyContent="center"
@@ -143,20 +149,37 @@ const SearchPanel: React.FC = () => {
             <Button type="submit" variant="contained">
               Get Distance
             </Button>
-            {distance !== 0 && source && destination && (
-              <Typography sx={{ fontSize: "22px", fontWeight: 400 }}>
-                Distance :{" "}
-                <span
-                  style={{
+            {((distance.d !== 0 && !distance.comment) || distance.comment) &&
+              source &&
+              destination && (
+                <Typography
+                  sx={{
                     fontSize: "22px",
-                    color: "#FF0101",
-                    fontWeight: 600,
+                    fontWeight: 400,
+                    textAlign: "center",
                   }}
                 >
-                  {distance} Nautical miles
-                </span>
-              </Typography>
-            )}
+                  Distance :{" "}
+                  <span
+                    style={{
+                      fontSize: "22px",
+                      color: "#FF0101",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {distance.d} Nautical miles
+                  </span>
+                  <br />
+                  <span
+                    style={{
+                      fontSize: "14px",
+                      color: "black",
+                    }}
+                  >
+                    {distance.comment}
+                  </span>
+                </Typography>
+              )}
           </Stack>
         </form>
       </Stack>
