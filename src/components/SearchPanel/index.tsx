@@ -75,7 +75,7 @@ const SearchPanel: React.FC = () => {
             spacing={3}
             justifyContent="center"
             alignItems="center"
-            sx={{ height: "100%", margin: 8 }}
+            sx={{ height: "100%", margin: '42px 8px' }}
           >
             <Stack
               direction="row"
@@ -99,7 +99,7 @@ const SearchPanel: React.FC = () => {
                   setSource(newValue);
                 }}
                 selectOnFocus
-                sx={{ width: "95%" }}
+                sx={{ width: "80%" }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Source Airport" />
                 )}
@@ -127,7 +127,7 @@ const SearchPanel: React.FC = () => {
                 }}
                 renderOption={renderOption}
                 selectOnFocus
-                sx={{ width: "95%" }}
+                sx={{ width: "80%" }}
                 renderInput={(params) => (
                   <TextField required {...params} label="Destination Airport" />
                 )}
