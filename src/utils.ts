@@ -7,6 +7,7 @@ export const calculateFlyingDistance = (
   destinationLat: any,
   destinationLng: any
 ) => {
+  const R = 3440 ; //Earth mean radius in nautical miles
   //Distance between latitudes and longitudes
   const latDifference = (sourceLat - destinationLat) * (Math.PI / 180);
   const lngDifference = (sourceLng - destinationLng) * (Math.PI / 180);
@@ -23,7 +24,7 @@ export const calculateFlyingDistance = (
       Math.sin(lngDifference / 2) *
       Math.sin(lngDifference / 2);
   const c = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 2;
-  return (3440 * c).toFixed(2);
+  return (R * c).toFixed(2);
 };
 
 //To clear previous routes and markers
@@ -51,6 +52,13 @@ export const plotRoute = (source: any, destination: any, map: any) => {
     path: [
       { lat: Number(source.lat), lng: Number(source.lng) },
       { lat: Number(destination.lat), lng: Number(destination.lng) },
+    ],
+    icons: [
+      {
+        icon: {
+          path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+        },
+      },
     ],
     map: map,
     strokeColor: "#FF0000",
