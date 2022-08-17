@@ -6,6 +6,8 @@ import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
 import { calculateFlyingDistance } from "../../utils";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const SearchPanel: React.FC = () => {
   const {
@@ -16,6 +18,11 @@ const SearchPanel: React.FC = () => {
     source,
     destination,
   } = useContext(AirportContext);
+
+  const theme = useTheme();
+  const lgUp = useMediaQuery(theme.breakpoints.up("lg"), {
+    noSsr: true,
+  });
 
   const filterOptionMethod = createFilterOptions();
   const filterOptions = (options, state) => {
@@ -49,7 +56,7 @@ const SearchPanel: React.FC = () => {
             alignItems="center"
             sx={{ height: "100%" }}
           >
-            <img src={airplaneIcon} alt="airplane" width="180" />
+            <img src={airplaneIcon} alt="airplane" width={lgUp ? 180 : 150} />
             <Typography
               sx={{ color: "white", fontSize: "30px", fontWeight: 500 }}
             >
@@ -75,7 +82,7 @@ const SearchPanel: React.FC = () => {
             spacing={3}
             justifyContent="center"
             alignItems="center"
-            sx={{ height: "100%", margin: '42px 8px' }}
+            sx={{ height: "100%", margin: "42px 8px" }}
           >
             <Stack
               direction="row"
