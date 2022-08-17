@@ -6,7 +6,7 @@ import locationIcon from "../../assets/pngIcons/locationIcon.png";
 import { AirportContext } from "src/context/AirportContextProvider";
 import { airports } from "../../data/us_airports";
 import { calculateFlyingDistance } from "../../utils";
-import {ICordsData} from "../../types"
+import { ICordsData } from "../../types";
 
 const SearchPanel: React.FC = () => {
   const {
@@ -19,18 +19,18 @@ const SearchPanel: React.FC = () => {
   } = useContext(AirportContext);
 
   const filterOptionMethod = createFilterOptions();
-  const filterOptions = (options: any, state: any) => {
+  const filterOptions = (options, state) => {
     const result = filterOptionMethod(options, state);
     if (result.length === 0) {
       return filterOptionMethod(options, {
         ...state,
-        getOptionLabel: (o: any) => o.name.toString() || o.iata_code.toString(),
+        getOptionLabel: (o:any) => o.name.toString() || o.iata_code.toString(),
       });
     }
     return result;
   };
 
-  const renderOption = (props: any, option: any) => (
+  const renderOption = (props, option) => (
     <Box component="li" {...props}>
       <span>
         <b>{option.iata_code}</b>
@@ -121,7 +121,7 @@ const SearchPanel: React.FC = () => {
                   option.iata_code + "-" + option.name
                 }
                 onChange={(_event, newValue) => {
-                  setDestination(newValue)
+                  setDestination(newValue);
                 }}
                 renderOption={renderOption}
                 selectOnFocus
