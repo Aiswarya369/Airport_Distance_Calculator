@@ -16,4 +16,7 @@ npm start
 
 - Typescript is the language used in this project.
 - Material UI is used as the CSS library for the React components.
+    - Autocomplete of airport fields is achieved using the Autocomplete Component with MUI.
 - @googlemaps/react-wrapper library is used to integrate the Google Map. 
+    - Flying distance in nautical miles is calculated using Haversine Formula (added inside utils.ts file)
+    - Markers and Geodesic line is added using Google markers and Google polyline features.
